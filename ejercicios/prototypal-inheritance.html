@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Herencia Prototipal</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <h1>
+      <code>SomeObject.prototype</code> es un objeto donde definimos el
+      prototipo de las instancias de <code>SomeObject</code>. Es decir, las
+      instancias de <code>SomeObject</code> van a "heredar" de
+      <code>SomeObject.prototype</code>.
+      <br />
+      <br />
+      <code>SomeObject.[[Prototype]]</code> es el prototipo de
+      <code>SomeObject</code>. Es decir, <code>SomeObject</code> "hereda" de
+      <code>SomeObject.prototype</code>.
+    </h1>
+
+    <script>
+      function Hero(name) {
+        this.name = name;
+      }
+
+      Hero.prototype.saludar = function() {
+        console.log(`Hola, soy ${this.name}.`);
+      };
+
+      const zelda = new Hero('Zelda');
+
+      // propiedades de la instancia
+      console.log(`Name: ${zelda.name}`);
+      // propiedades de la "clase"
+      console.log(`Saludar: ${zelda.saludar}`);
+      // propiedades heredadas ej: toString
+      console.log(`toString: ${zelda.toString}`);
+      // hasOwnProperty (de dónde sale toString o esto?)
+      console.log(`zelda.hasOwnProperty("name"): ${zelda.hasOwnProperty("name")}`);
+      console.log(`zelda.hasOwnProperty("name"): ${zelda.hasOwnProperty("saludar")}`);
+      // inspeccionemos el prototipo del zelda
+      // Lo siguiente es en consola
+      // zelda.__proto__
+      //  {saludar: ƒ, constructor: ƒ}
+      //    saludar: ƒ ()
+      //    constructor: ƒ Hero(name)
+      //    __proto__: Object
+
+      // zelda.__proto__.__proto__
+      //     {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …} 
+      //         constructor: ƒ Object()
+      //         hasOwnProperty: ƒ hasOwnProperty()
+      //         isPrototypeOf: ƒ isPrototypeOf()
+      //         propertyIsEnumerable: ƒ propertyIsEnumerable()
+      //         toLocaleString: ƒ toLocaleString()
+      //         toString: ƒ toString()
+      //         valueOf: ƒ valueOf()
+      //         __defineGetter__: ƒ __defineGetter__()
+      //         __defineSetter__: ƒ __defineSetter__()
+      //         __lookupGetter__: ƒ __lookupGetter__()
+      //         __lookupSetter__: ƒ __lookupSetter__()
+      //         get __proto__: ƒ __proto__()
+      //         set __proto__: ƒ __proto__() 
+
+      // zelda.__proto__.__proto__.__proto__ 
+      //   null       
+
+      // Object.getPrototypeOf(zelda) == zelda.__proto__  
+      //     true
+
+      // Object.getPrototypeOf(zelda) === zelda.__proto__
+      //     true    
+      // lo de arriba significa que tienen el mismo valor así como la misma referencia( en objetos el === significa que son el mismo objeto) 
+
+      // inspeccionemos el prototipo del Hero
+
+      // Hero.prototype === zelda.__proto__ === Object.getPrototypeOf(zelda)
+      // Los tres son el mismo objeto
+
+      // prototypeOfZelda.hasOwnProperty("toString");
+      //   false
+      // const prototypeOfPrototypeOfZelda = Object.getPrototypeOf(prototypeOfZelda);  
+      // prototypeOfPrototypeOfZelda.hasOwnProperty("toString");
+      //    true  
+
+      // inspeccionemos el prototipo del Object
+
+      // Object
+      //    ƒ Object() { [native code] }
+      // const prototypeOfObject = Object.getPrototypeOf(Object.prototype)
+      // prototypeOfObject 
+      //   null
+
+    </script>
+  </body>
+</html>
